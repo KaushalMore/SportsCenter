@@ -1,4 +1,4 @@
-# Building FullStack E-Commerce App using SpringBoot & React
+# FullStack E-Commerce App using SpringBoot & React
 
 ## Introduction:
 
