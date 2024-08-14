@@ -12,7 +12,6 @@ import java.util.List;
 
 @Mapper
 public interface OrderMapper {
-
     OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
 
     @Mapping(source = "id", target = "id")
@@ -20,13 +19,16 @@ public interface OrderMapper {
     @Mapping(source = "shippingAddress", target = "shippingAddress")
     @Mapping(source = "subTotal", target = "subTotal")
     @Mapping(source = "deliveryFee", target = "deliveryFee")
-    @Mapping(target = "total", expression = "java(order.getTotal() + order.getDeliveryFee())")
+    @Mapping(target = "total", expression = "java(order.getSubTotal() + order.getDeliveryFee())")
     @Mapping(target = "orderDate", expression = "java(java.time.LocalDateTime.now())")
-    @Mapping(target = "orderStatus", constant = "Pending")
+    @Mapping(source = "orderStatus", target = "orderStatus")
+    @Mapping(source ="orderItems", target = "orderItems")
     OrderResponse OrderToOrderResponse(Order order);
 
     @Mapping(target = "orderDate", expression = "java(orderDto.getOrderDate())")
     @Mapping(target = "orderStatus", constant = "Pending")
+    @Mapping(target = "orderItems", expression = "java(new ArrayList<>())")
+        // Reference enum constant directly
     Order orderResponseToOrder(OrderDto orderDto);
 
     List<OrderDto> ordersToOrderResponses(List<Order> orders);

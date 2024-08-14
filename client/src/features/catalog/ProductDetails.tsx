@@ -5,6 +5,7 @@ import { Product } from "../../app/models/product";
 import agent from "../../app/api/agent";
 import { LoadingButton } from "@mui/lab";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
+import { extractImageName, formatPrice } from '../../app/util/util';
 
 export default function ProductDetails(){
     const { basket } = useAppSelector(state=>state.basket);
@@ -15,25 +16,6 @@ export default function ProductDetails(){
     const [quantity, setQuantity] = useState(0);
     const [submitting, setSubmitting] = useState(false);
     const item = basket?.items.find(i=> i.id === product?.id);
-
-    // Define the extractImageName function
-    const extractImageName = (item: Product): string | null => {
-        if (item && item.pictureUrl) {
-            const parts = item.pictureUrl.split('/');
-            if (parts.length > 0) {
-                return parts[parts.length - 1];
-            }
-        }
-        return null;
-    };
-
-    const formatPrice = (price: number): string =>{
-        return new Intl.NumberFormat('en-IN', {
-            style: 'currency',
-            currency: 'INR',
-            minimumFractionDigits: 2
-        }).format(price);
-    };
 
     useEffect(() => {
         if (item) setQuantity(item.quantity);

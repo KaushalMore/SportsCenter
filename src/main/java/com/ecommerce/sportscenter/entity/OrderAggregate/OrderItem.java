@@ -1,5 +1,6 @@
 package com.ecommerce.sportscenter.entity.OrderAggregate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,28 +8,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "OrderItem")
+@Table(name="OrderItem")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class OrderItem {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+    @Column(name="Id")
     private Integer id;
 
     @Embedded
-    private ProductItemOrder itemOrder;
-
-    @Column(name = "Price")
+    private ProductItemOrdered itemOrdered;
+    @Column(name="Price")
     private Long price;
-
-    @Column(name = "Quantity")
+    @Column(name="Quantity")
     private Integer quantity;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name="order_id")
     private Order order;
 }

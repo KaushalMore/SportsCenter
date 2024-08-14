@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 @Service
 @Log4j2
 public class TypeServiceImpl implements TypeService {
-
     private final TypeRepository typeRepository;
 
     public TypeServiceImpl(TypeRepository typeRepository) {
@@ -20,15 +19,32 @@ public class TypeServiceImpl implements TypeService {
     }
 
     @Override
-    public List<TypeResponse> getTypes() {
+    public List<TypeResponse> getAllTypes() {
         log.info("Fetching All Types!!!");
+        //Fetch Types from DB
         List<Type> typeList = typeRepository.findAll();
+        //now use stream operator to map with Response
         List<TypeResponse> typeResponses = typeList.stream()
                 .map(this::convertToTypeResponse)
                 .collect(Collectors.toList());
-        log.info("Fetched All Types!!!");
-
         return typeResponses;
+    }
+
+    @Override
+    public Type findById(Integer typeId) {
+        return typeRepository.findById(typeId).orElseThrow();
+    }
+
+    @Override
+    public Type addType(String name) {
+        Type type = new Type();
+        type.setName(name);
+        return typeRepository.save(type);
+    }
+
+    @Override
+    public Type findByName(String typeId) {
+        return null;
     }
 
     private TypeResponse convertToTypeResponse(Type type) {

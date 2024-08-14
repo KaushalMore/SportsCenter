@@ -7,7 +7,6 @@ import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { signInUser } from "./accountSlice";
 
-
 export default function SignInPage(){
     const navigate = useNavigate();
     const location = useLocation();
@@ -93,7 +92,7 @@ export default function SignInPage(){
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="/register" variant="body2">
+                  <Link to="/register" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

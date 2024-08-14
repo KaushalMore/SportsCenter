@@ -6,9 +6,9 @@ services:
     restart: always
     container_name: "sports-center-mysql"
     environment:
-      MYSQL_ROOT_PASSWORD: "More@786"
+      MYSQL_ROOT_PASSWORD: 'password'
     ports:
-      - "3307:3306"
+      - "3306:3306"
     volumes:
       - ./data.sql:/docker-entrypoint-initdb.d/data.sql
       - sports-center-mysql-data:/var/lib/mysql

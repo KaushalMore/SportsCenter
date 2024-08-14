@@ -18,5 +18,4 @@ public class BasketItemResponse {
     private String productBrand;
     private String productType;
     private Integer quantity;
-
 }

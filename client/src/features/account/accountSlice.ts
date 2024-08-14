@@ -19,8 +19,12 @@ export const signInUser = createAsyncThunk<User, FieldValues>(
     'auth/login',
     async (data, thunkAPI) => {
         try{
-            const user = await agent.Account.login(data);
-            localStorage.setItem('user', JSON.stringify(user));
+            // const user = await agent.Account.login(data);
+            const response = await agent.Account.login(data);
+            const user = response.userDto;
+            localStorage.setItem('token', response.token);
+            localStorage.setItem('user', (JSON.stringify(user)));
+            localStorage.setItem('role', (user.role));
             return user;
         }
         catch(error: any){
@@ -53,7 +57,9 @@ export const logoutUser = createAsyncThunk<void>(
     async(_, thunkAPI) =>{
         try{
             //Remove user from local storage
+            localStorage.removeItem('token');
             localStorage.removeItem('user');
+            localStorage.removeItem('role');
         }
         catch(error){
             console.error("Error logging out user");
@@ -69,6 +75,8 @@ export const accountSlice = createSlice({
             state.user = null;
             state.error = null;
             localStorage.removeItem('user');
+            localStorage.removeItem('token');
+            localStorage.removeItem('role');
             router.navigate('/');
         }, clearError:(state)=>{
             state.error = null;
@@ -83,8 +91,9 @@ export const accountSlice = createSlice({
         builder.addMatcher(isAnyOf(signInUser.rejected, fetchCurrentUser.rejected, logoutUser.fulfilled), (state, action)=>{
             const payload = action.payload as string | null;
             state.error = payload;
-            toast.success('Sign in failed. Please try again');
+            toast.error('Sign in failed. Please try again');
         });
     })
 })
+
 export const {logOut, clearError} = accountSlice.actions;

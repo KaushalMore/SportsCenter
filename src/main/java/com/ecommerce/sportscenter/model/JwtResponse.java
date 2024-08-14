@@ -6,11 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class JwtResponse {
-    public String username;
-    public String token;
-}
 
+    private int statusCode;
+    private String message;
+
+    private String username;
+    private String token;
+
+    private UserDto userDto;
+}
