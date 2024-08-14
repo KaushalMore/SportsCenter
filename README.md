@@ -4,7 +4,7 @@
 
 SportsCenter is a fully-featured sports e-commerce platform that offers a seamless shopping experience for sports enthusiasts.
 
-Features:
+## Features:
 
 - Product Catalog:- A comprehensive catalog with detailed descriptions and high-quality images of sports products.
 - User Authentication:- Secure user registration and login, with features for account management.
@@ -12,15 +12,15 @@ Features:
 - Product Search and Filtering:- Advanced search and filtering options to help users find exactly what they need.
 - Order Management:- Easy order tracking and management for users and admins.
 
-Tech Stack :
-- Backend:
+## Tech Stack :
+- ### Backend:
   - Spring Boot
   - RESTful APIs
-- Frontend:
+- ### Frontend:
   - ReactJS + vite
   - TypeScript
   - material ui
-- Database:
+- ### Database:
   - MySQL
 
 ## Application Flow:
@@ -46,6 +46,8 @@ Tech Stack :
 ![image](https://github.com/KaushalMore/sportscenter/blob/master/client/public/screenshots/checkout_payment.png)
 
 ![image](https://github.com/KaushalMore/sportscenter/blob/master/client/public/screenshots/ordered.png)
+
+## Order Details:
 
 ![image](https://github.com/KaushalMore/sportscenter/blob/master/client/public/screenshots/myorders.png)
 
