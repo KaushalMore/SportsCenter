@@ -9,22 +9,18 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
-@Table(name = "Type")
+@Table(name="Type")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class Type {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+    @Column(name="Id")
     private Integer id;
-
-    @Column(name = "Name")
+    @Column(name="Name")
     private String name;
-
     @OneToMany(mappedBy = "type", fetch = FetchType.LAZY)
-    private List<Product> products;
-    
+    private List<Product> prodcts;
 }

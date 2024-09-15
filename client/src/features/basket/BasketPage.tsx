@@ -2,10 +2,10 @@ import { IconButton, Table, TableBody, TableCell, TableContainer, TableHead, Tab
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import agent from "../../app/api/agent";
-import { Product } from "../../app/models/product";
 import { Add, Remove } from "@mui/icons-material";
 import BasketSummary from "./BasketSummary";
 import { Link } from "react-router-dom";
+import { extractImageName, formatPrice } from '../../app/util/util';
 
 export default function BasketPage(){
     const {basket} = useAppSelector(state=>state.basket);
@@ -22,26 +22,8 @@ export default function BasketPage(){
     const incrementItem = (productId: number, quantity: number = 1)=>{
         BasketActions.incrementItemQuantity(productId, quantity, dispatch);
     };
-    // Define the extractImageName function
-    const extractImageName = (item: Product): string | null => {
-        if (item && item.pictureUrl) {
-            const parts = item.pictureUrl.split('/');
-            if (parts.length > 0) {
-                return parts[parts.length - 1];
-            }
-        }
-        return null;
-    };
-
-    // Function to format the price with INR currency symbol
-    const formatPrice = (price: number): string =>{
-        return new Intl.NumberFormat('en-IN', {
-            style: 'currency',
-            currency: 'INR',
-            minimumFractionDigits: 2
-        }).format(price);
-    };
-    if(!basket || basket.items.length ===0 ) return <Typography variant="h3">Your basket is empty. Please add few items!!!</Typography>
+   
+    if(!basket || basket.items.length ===0 ) return <Typography align="center" mt={2} variant="h3">Your basket is empty. Please add few items!!!</Typography>
     return (
         <>
         <TableContainer component={Paper}>

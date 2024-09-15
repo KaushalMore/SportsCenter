@@ -12,12 +12,15 @@ export default function SignedInMenu() {
   const { user } = useAppSelector(state => state.account);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   }
+
   return (
     <>
       <Button
@@ -25,7 +28,8 @@ export default function SignedInMenu() {
         color='inherit'
         sx={{ typography: 'h6' }}
       >
-        Hi, {user?.username}
+        Hi, 
+        {user?.username.substring(0,11)}
       </Button>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose} TransitionComponent={Fade}>
         <MenuItem onClick={handleClose}>Profile</MenuItem>

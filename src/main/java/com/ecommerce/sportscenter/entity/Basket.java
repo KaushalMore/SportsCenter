@@ -15,7 +15,6 @@ public class Basket {
     @Id
     private String id;
     private List<BasketItem> items = new ArrayList<>();
-
     public Basket(String id) {
         this.id = id;
     }

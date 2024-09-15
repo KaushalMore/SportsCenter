@@ -8,14 +8,19 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface OrderService {
-
     OrderResponse getOrderById(Integer orderId);
 
-    List<OrderResponse> getAllOrders();
+    List<OrderResponse> getAllOrders(Integer userId);
 
     Page<OrderResponse> getAllOrders(Pageable pageable);
 
     Integer createOrder(OrderDto order);
 
-    void deleteOrder(Integer orderId);
+    String deleteOrder(Integer orderId);
+
+    String cancelOrder(Integer userId, Integer orderId);
+
+    OrderResponse updateOrderStatus(Integer orderId, String status);
+
+    String returnOrder(Integer userId, Integer orderId);
 }

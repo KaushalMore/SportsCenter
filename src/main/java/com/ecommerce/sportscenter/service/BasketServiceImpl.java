@@ -14,8 +14,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Log4j2
-public class BasketServiceImpl implements BasketService {
-
+public class BasketServiceImpl implements BasketService{
     private final BasketRepository basketRepository;
 
     public BasketServiceImpl(BasketRepository basketRepository) {
@@ -24,52 +23,52 @@ public class BasketServiceImpl implements BasketService {
 
     @Override
     public List<BasketResponse> getAllBaskets() {
-        log.info("Fetching all Basket");
+        log.info("Fetching All Baskets");
         List<Basket> basketList = (List<Basket>) basketRepository.findAll();
-        List<BasketResponse> basketResponses = basketList.stream().
-                map(this::convertToBasketResponse)
+        //now we will use stream operator to map with response
+        List<BasketResponse> basketResponses = basketList.stream()
+                .map(this::convertToBasketResponse)
                 .collect(Collectors.toList());
-        log.info("Fetched All Basket");
+        log.info("Fetched all Baskets");
         return basketResponses;
     }
 
     @Override
     public BasketResponse getBasketById(String basketId) {
-        log.info("Fetching basket by id: {}", basketId);
-        Optional<Basket> basketOptoinal = basketRepository.findById(basketId);
-        if (basketOptoinal.isPresent()) {
-            Basket basket = basketOptoinal.get();
-            log.info("Fetched basket by id: {}", basketId);
+        log.info("Fetching Basket by Id: {}", basketId);
+        Optional<Basket> basketOptional = basketRepository.findById(basketId);
+        if(basketOptional.isPresent()){
+            Basket basket = basketOptional.get();
+            log.info("Fetched Basket by Id: {}", basketId);
             return convertToBasketResponse(basket);
+        }else{
+            log.info("Basket with Id: {} not found", basketId);
+            return null;
         }
-        log.info("Basket with id: {} not found", basketId);
-        return null;
     }
 
     @Override
     public void deleteBasketById(String basketId) {
-        log.info("Deleting basket by id: {}", basketId);
+        log.info("Deleting Basket by Id: {}", basketId);
         basketRepository.deleteById(basketId);
-        log.info("Deleted basket by id: {} ", basketId);
+        log.info("Deleted Basket by Id: {}", basketId);
     }
 
     @Override
     public BasketResponse createBasket(Basket basket) {
-        log.info("Crating basket");
+        log.info("Creating Basket");
         Basket savedBasket = basketRepository.save(basket);
-        log.info("Basket created with id: {}", basket.getId());
+        log.info("Basket created with Id: {}", savedBasket.getId());
         return convertToBasketResponse(savedBasket);
     }
 
     private BasketResponse convertToBasketResponse(Basket basket) {
-        if (basket == null) {
+        if(basket == null){
             return null;
         }
-
         List<BasketItemResponse> itemResponses = basket.getItems().stream()
                 .map(this::convertToBasketItemResponse)
                 .collect(Collectors.toList());
-
         return BasketResponse.builder()
                 .id(basket.getId())
                 .items(itemResponses)

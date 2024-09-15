@@ -1,6 +1,5 @@
 package com.ecommerce.sportscenter.repository;
 
-
 import com.ecommerce.sportscenter.entity.OrderAggregate.Order;
 import com.ecommerce.sportscenter.entity.OrderAggregate.OrderStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,12 +16,13 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     List<Order> findByOrderStatus(OrderStatus orderStatus);
 
-    List<Order> findByOrderDateBetween(LocalDateTime startDate, LocalDateTime endDate);
+    List<Order> findByOrderDateBetween(LocalDateTime startdate, LocalDateTime endDate);
 
-    @Query("SELECT o FROM Order o JOIN o.orderItems oi WHERE oi.itemOrder.name LIKE %:productName%")
+    @Query("SELECT o FROM Order o JOIN o.orderItems oi WHERE oi.itemOrdered.name LIKE %:productName%")
     List<Order> findByProductNameInOrderItems(@Param("productName") String productName);
 
     @Query("SELECT o FROM Order o WHERE o.shippingAddress.city = :city")
     List<Order> findByShippingAddressCity(@Param("city") String city);
- 
+
+    List<Order> findByUserId(Integer userId);
 }

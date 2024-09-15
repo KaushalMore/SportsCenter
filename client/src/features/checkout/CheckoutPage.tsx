@@ -17,7 +17,7 @@ import {
   import { Basket, BasketItem } from "../../app/models/basket";
   import { toast } from "react-toastify";
   import agent from "../../app/api/agent";
-  import { useAppDispatch } from "../../app/store/configureStore";
+  import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
   import { setBasket } from "../basket/basketSlice";
 import { ValidationRules } from "./validationRules";
   
@@ -41,6 +41,7 @@ import { ValidationRules } from "./validationRules";
     const [activeStep, setActiveStep] = useState(0);
     const [orderNumber, setOrderNumber] = useState(0);
     const [loading, setLoading] = useState(false);
+    const { user } = useAppSelector(state => state.account);
     const currentValdationRule = ValidationRules[activeStep];
     const methods = useForm({
       mode: "all",
@@ -55,7 +56,7 @@ import { ValidationRules } from "./validationRules";
         // Log form data before moving to the next step
         //console.log(methods.getValues());
         const data: any = methods.getValues();
-        console.log(data);
+        console.log("Recieved Data ",data);
         if (activeStep === steps.length - 1) {
           // If it's the last step, submit the order
           const basket = await agent.Basket.get();
@@ -80,7 +81,8 @@ import { ValidationRules } from "./validationRules";
                   country: data.country,
                 },
                 subTotal: subTotal,
-                deliveryFee: deliveryFee              
+                deliveryFee: deliveryFee,
+                userDto:user              
               };
   
               // Call the API to create the order

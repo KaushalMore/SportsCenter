@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/baskets")
 public class BasketController {
-
     private final BasketService basketService;
 
     public BasketController(BasketService basketService) {
@@ -23,27 +22,28 @@ public class BasketController {
     }
 
     @GetMapping
-    public List<BasketResponse> getAllBaskets(){
+    public List<BasketResponse> getAllBaskets() {
         return basketService.getAllBaskets();
     }
 
     @GetMapping("/{basketId}")
-    public BasketResponse getBasketById(@PathVariable("basketId") String basketId) {
+    public BasketResponse getBasketById(@PathVariable String basketId){
         return basketService.getBasketById(basketId);
     }
-
     @DeleteMapping("/{basketId}")
-    public void deleteBasketById(@PathVariable("basketId") String basketId) {
+    public void deleteBasketById(@PathVariable String basketId){
         basketService.deleteBasketById(basketId);
     }
 
     @PostMapping
     public ResponseEntity<BasketResponse> createBasket(@RequestBody BasketResponse basketResponse){
+        //convert this basket response to basket entity
         Basket basket = convertToBasketEntity(basketResponse);
-        BasketResponse createsBasket = basketService.createBasket(basket);
-        return new ResponseEntity<>(createsBasket, HttpStatus.CREATED);
+        //call the service method to create the basket
+        BasketResponse createdBasket = basketService.createBasket(basket);
+        //Return the Created Basket
+        return new ResponseEntity<>(createdBasket, HttpStatus.CREATED);
     }
-
 
     private Basket convertToBasketEntity(BasketResponse basketResponse) {
         Basket basket = new Basket();

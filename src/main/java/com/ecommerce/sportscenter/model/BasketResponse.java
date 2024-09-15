@@ -12,8 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BasketResponse {
-
     private String id;
     private List<BasketItemResponse> items;
-
 }

@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MapperConfig {
     @Bean
-    public OrderMapper orderMapper() {
+    public OrderMapper orderMapper(){
         return Mappers.getMapper(OrderMapper.class);
     }
 }

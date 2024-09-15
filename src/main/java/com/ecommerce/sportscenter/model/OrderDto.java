@@ -1,7 +1,7 @@
 package com.ecommerce.sportscenter.model;
 
-
 import com.ecommerce.sportscenter.entity.OrderAggregate.ShippingAddress;
+import com.ecommerce.sportscenter.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class OrderDto {
 
     private String basketId;
@@ -20,5 +20,6 @@ public class OrderDto {
     private Long subTotal;
     private Long deliveryFee;
     private LocalDateTime orderDate;
+    private UserDto userDto;
 
 }

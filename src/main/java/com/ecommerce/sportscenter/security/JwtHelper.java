@@ -3,7 +3,6 @@ package com.ecommerce.sportscenter.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -16,37 +15,31 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Component
-@Log4j2
 public class JwtHelper {
-
     public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
-    private final String secret = "eyJzdWIiOiIxNjM0NTY92CiTyOfFtZSI8MyKiG7gRG9lhj69YWRtaW1iOnRydWV3";
+    private String secret = "f27dacd186810e78c0fd8ba65ecf3f1524ff087c5e86773d5172d424b3fd201f";
 
-    public String getUserNameFromToken(String token) {
-        return getClaimFromToken(token, Claims::getSubject);
-    }
+    public String getUserNameFromToken(String token){ return getClaimFromToken(token, Claims::getSubject);}
 
-    public Date getExpirationDateFromToken(String token) {
-        return getClaimFromToken(token, Claims::getExpiration);
-    }
+    public Date getExpirationDateFromToken(String token) {return getClaimFromToken(token, Claims::getExpiration);}
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(String username){
         Map<String, Object> claims = new HashMap<>();
-        return generateToken(claims, userDetails.getUsername());
+        return generateToken(claims, username);
     }
 
-    public boolean validateToken(String token, UserDetails userDetails) {
+    public Boolean validateToken(String token, UserDetails userDetails){
         final String username = getUserNameFromToken(token);
-        return (username.equals(userDetails.getUsername()) && !isValidToken(token));
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    private boolean isValidToken(String token) {
+    private boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);
         return expiration.before(new Date());
     }
 
     private String generateToken(Map<String, Object> claims, String subject) {
-        // convert the secret string key into a key object
+        //Convert the secret string key into a Key object
         Key hmacKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), SignatureAlgorithm.HS512.getJcaName());
 
         return Jwts.builder()
@@ -71,5 +64,4 @@ public class JwtHelper {
                 .parseClaimsJws(token)
                 .getBody();
     }
-    
 }

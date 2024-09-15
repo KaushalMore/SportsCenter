@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class ShippingAddress {
-
     private String name;
     private String address1;
     private String address2;
@@ -20,5 +19,4 @@ public class ShippingAddress {
     private String state;
     private String zipcode;
     private String country;
-
 }
