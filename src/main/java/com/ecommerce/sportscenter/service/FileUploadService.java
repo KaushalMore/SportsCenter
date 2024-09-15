@@ -12,8 +12,7 @@ import java.util.Objects;
 @Service
 public class FileUploadService {
 
-    private final String UPLOAD_DIR = "C:\\Users\\kaushal More\\Project\\Java-React-FullStack-Module15\\Java-React-FullStack-Module15\\client\\public\\images\\products";
-
+    private final String UPLOAD_DIR = "C:\\Users\\kaushal More\\Project\\fullstack-java-react\\sportscenter\\client\\public\\images\\products";
     public String uploadFile(MultipartFile photo) {
         try {
             if (photo == null || photo.isEmpty()) {
